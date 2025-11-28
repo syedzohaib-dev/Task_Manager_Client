@@ -28,10 +28,11 @@ const Sidebar = ({ role, isOpen, setIsOpen }) => {
 
   const menus = {
     user: [
-      // { name: "Quotation", path: "createinvoice", icon: <BsFillClipboard2MinusFill /> },
-      // { name: "Client List", path: "clientlist", icon: <HiUsers /> },
-      // { name: "Templates", path: "templates", icon: <BsLayoutWtf /> },
-      // { name: "View History", path: "history", icon: <MdHistory /> },
+      { name: "Dashboard", path: "stats", icon: <MdDashboard /> },
+      { name: "Tasks", path: "tasks", icon: <FaTasks /> },
+      { name: "Completed", path: "completed", icon: <MdAddTask /> },
+      { name: "In Progress", path: "inprogress", icon: <GrInProgress /> },
+      { name: "Todo", path: "todo", icon: <LuListTodo /> },
     ],
     admin: [
       { name: "Dashboard", path: "stats", icon: <MdDashboard /> },
@@ -51,37 +52,40 @@ const Sidebar = ({ role, isOpen, setIsOpen }) => {
       className={` border-gray-400 fixed md:static top-0 left-0 h-full w-64 bg-white shadow-md transform transition-transform duration-300 z-40 flex flex-col
       ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
     >
-     
 
-     
-     
-        <>
-          <nav className="flex-1 py-4">
-            <div className="space-y-2 px-4">
-              {links.map((link, index) => (
-                <NavLink
-                  to={link.path}
-                  key={index}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3 my-3 px-4 py-2 text-[1rem] rounded-md transition ${isActive
-                      ? "bg-blue-800 text-white"
-                      : "bg-white text-black hover:bg-gray-100"
-                    }`
-                  }
-                >
-                  {link.icon}
-                  {link.name}
-                </NavLink>
-              ))}
 
-            </div>
 
-          </nav>
-          <button className="flex items-center  justify-center my-4 mx-2 px-16 py-2 rounded-md bg-black text-white" onClick={handleLogout}>
-            Logout
-          </button>
-        </>
-      
+      <span className="flex gap-2 justify-center items-center h-20 text-2xl text-center border-b border-gray-200">
+        <img className="w-10 h-10" src="https://cdn-icons-png.flaticon.com/512/4345/4345800.png" alt="" /> Task Me
+      </span>
+      <>
+        <nav className="flex-1 py-4">
+
+          <div className="space-y-2 px-4">
+            {links.map((link, index) => (
+              <NavLink
+                to={link.path}
+                key={index}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 my-3 px-4 py-2 text-[1rem] rounded-md transition ${isActive
+                    ? "bg-blue-800 text-white"
+                    : "bg-white text-black hover:bg-gray-100"
+                  }`
+                }
+              >
+                {link.icon}
+                {link.name}
+              </NavLink>
+            ))}
+
+          </div>
+
+        </nav>
+        <button className="flex items-center  justify-center my-4 mx-2 px-16 py-2 rounded-md bg-black text-white" onClick={handleLogout}>
+          Logout
+        </button>
+      </>
+
 
 
     </div>

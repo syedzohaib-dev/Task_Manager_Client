@@ -50,15 +50,16 @@ const PriorityChart = () => {
 
 
     return (
-        <div className="bg-white p-6 my-6 h-130 border rounded-2xl shadow-md w-full mx-auto">
-            <div className="h-130 w-full">
+        <div className="bg-white p-6 my-6  rounded-2xl shadow-md w-full mx-auto">
+            <p className="text-2xl text-gray-600 font-semibold mb-4">Chrt by priority</p>
+            <div className="h-100 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="date" />
                         <YAxis />
                         <Tooltip />
-                        <Bar dataKey="amount" fill="#8b5cf6" radius={[6, 6, 0, 0]} />
+                        <Bar dataKey="amount" fill="#193cb8" radius={[6, 6, 0, 0]} />
                     </BarChart>
                 </ResponsiveContainer>
             </div>

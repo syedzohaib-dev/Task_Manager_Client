@@ -4,19 +4,17 @@ import { MdAddTask } from 'react-icons/md'
 import { FcProcess } from "react-icons/fc";
 import { LuListTodo } from 'react-icons/lu';
 import PriorityChart from '../components/PriorityChart';
+import TaskTable from '../components/TaskTable';
+import UserTable from '../components/UserTable';
 
 
 const Stats = () => {
     return (
-        <div className="min-h-screen bg-white p-6 hide-scrolbar">
+        <div className="h-screen bg-gray-100 p-6 overflow-y-auto hide-scrollbar">
             <div className="max-w-7xl mx-auto">
 
-
-
-                {/* Statistics Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                    {/* Total Quotation */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                <div className="w-full flex flex-wrap md:gap-4 gap-2 mb-8">
+                    <div className="md:w-[300px] w-full  rounded-2xl shadow-sm bg-white border-gray-200 p-6">
                         <div className="flex items-center gap-2 mb-4">
                             <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
                                 <span className="text-blue-600 text-lg"><FaTasks /></span>
@@ -30,8 +28,7 @@ const Stats = () => {
                         </div>
                     </div>
 
-                    {/* Approved */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                    <div className="bg-white md:w-[300px] w-full rounded-2xl shadow-sm  border-gray-200 p-6">
                         <div className="flex items-center gap-2 mb-4">
                             <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
                                 <span className="text-green-600 text-lg"><MdAddTask /></span>
@@ -49,8 +46,7 @@ const Stats = () => {
                         </div>
                     </div>
 
-                    {/* Pending */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                    <div className="bg-white md:w-[300px] w-full rounded-2xl shadow-sm  border-gray-200 p-6">
                         <div className="flex items-center gap-2 mb-4">
                             <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
                                 <span className="text-red-600 text-lg"><FcProcess /></span>
@@ -64,8 +60,7 @@ const Stats = () => {
                         </div>
                     </div>
 
-                    {/* Reject */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                    <div className="bg-white md:w-[300px] w-full rounded-2xl shadow-sm  border-gray-200 p-6">
                         <div className="flex items-center gap-2 mb-4">
                             <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
                                 <span className="text-green-600 text-lg"><LuListTodo /></span>
@@ -85,6 +80,10 @@ const Stats = () => {
             </div>
 
             <PriorityChart />
+
+            <TaskTable />
+
+            <UserTable />
 
 
 

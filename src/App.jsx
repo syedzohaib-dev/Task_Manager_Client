@@ -14,18 +14,24 @@ import Todo from './pages/Todo.jsx';
 import Team from './pages/Team.jsx';
 import Trash from './pages/Trash.jsx';
 import Stats from './pages/Stats.jsx';
+import TaskDetail from './pages/TaskDetail.jsx';
+import VerifyUser from './pages/VerifyUser.jsx';
 
 const App = () => {
+  const userRole = 'admin' // admin - user
   return (
     <>
       <Router>
         <Routes>
           <Route path="/" index element={< Login />} />
+          <Route path="/verifyuser" index element={< VerifyUser />} />
 
-          <Route path="/dashboard" element={<Dashboard role={('admin')} />}>
+
+          <Route path="/dashboard" element={<Dashboard role={userRole} />}>
             <Route index element={<Navigate to="stats" replace />} />
             <Route index path="stats" element={<Stats />} />
             <Route path="tasks" element={<Tasks />} />
+            <Route path="taskdetail" element={<TaskDetail />} />
             <Route path="completed" element={< Completed />} />
             <Route path="inprogress" element={<Inprogress />} />
             <Route path="todo" element={< Todo />} />
