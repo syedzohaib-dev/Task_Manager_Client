@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ProfileModal = ({ openProfile, onClose }) => {
     if (!openProfile) return null;
@@ -14,14 +15,14 @@ const ProfileModal = ({ openProfile, onClose }) => {
 
                 <div className="space-y-3 max-h-80 overflow-y-auto">
                     <div className="p-2 border-b border-gray-200 rounded">
-                        <p className="text-sm">Profile</p>
+                        <Link to="/profile">  <p className="text-sm"> Profile </p> </Link>
                     </div>
                     <div className="p-2 border-b border-gray-200 rounded">
-                        <p className="text-sm">Change Password</p>  
+                        <p className="text-sm">Change Password</p>
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

@@ -16,6 +16,7 @@ import Trash from './pages/Trash.jsx';
 import Stats from './pages/Stats.jsx';
 import TaskDetail from './pages/TaskDetail.jsx';
 import VerifyUser from './pages/VerifyUser.jsx';
+import Profile from './pages/Profile.jsx';
 
 const App = () => {
   const userRole = 'admin' // admin - user
@@ -24,7 +25,9 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" index element={< Login />} />
+          <Route path="/login" index element={< Login />} />
           <Route path="/verifyuser" index element={< VerifyUser />} />
+          <Route path="/profile" index element={< Profile />} />
 
 
           <Route path="/dashboard" element={<Dashboard role={userRole} />}>

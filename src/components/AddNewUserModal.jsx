@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { validateEmail } from '../utils/helper.js'
 
 const AddNewUserModal = ({ openAddUser, onClose, }) => {
     if (!openAddUser) return null;

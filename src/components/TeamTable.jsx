@@ -1,5 +1,6 @@
 import React from 'react'
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
+import { Link } from 'react-router-dom';
 
 const usersData = [
     {
@@ -110,12 +111,16 @@ const TeamTable = () => {
 
                                 {/* Action Buttons */}
                                 <td className="px-6 py-3 text-center flex justify-center gap-3">
-                                    <button className="p-2  text-blue-600 rounded-full">
-                                        <FiEdit2 size={18} />
-                                    </button>
+                                    <Link to="/profile">
+                                        <button className="p-2  text-blue-600 rounded-full">
+                                            <FiEdit2 size={18} />
+                                        </button>
+                                    </Link>
+
                                     <button className="p-2  text-red-600 rounded-full">
                                         <FiTrash2 size={18} />
                                     </button>
+
                                 </td>
 
                             </tr>
