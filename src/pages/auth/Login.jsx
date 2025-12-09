@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa6'
 import { validateEmail } from '../../utils/helper.js';
-// import { API_PATHS, BASE_URL } from '../../utils/apiPath.js';
-// import axios from 'axios';
-// import { Navigate } from "react-router-dom";
+import axiosInstance from '../../utils/axiosInstance.js'
+import { API_PATHS } from '../../utils/apiPath.js';
+import { errorToast } from '../../utils/toast.js'
+import { useUser } from '../../context/UserContext.jsx';
 
 
 const Login = ({ setUserRole }) => {
-
+  const { getUser } = useUser()
   const [showPassword, setShowPassord] = useState(false)
   const finalType = showPassword ? "text" : "password";
 
@@ -37,26 +38,80 @@ const Login = ({ setUserRole }) => {
   };
 
   const validateForm = () => {
-    const newErrors = {};
+    const errors = {};
     if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
+      errors.email = "Email is required";
     }
     if (!validateEmail(formData.email)) {
-      newErrors.email = 'Please enter a valid email address.'
-      return;
+      errors.email = 'Please enter a valid email address.'
     }
     if (!formData.password) {
-      newErrors.password = "Password is required";
+      errors.password = "Password is required";
     }
-    return newErrors;
+    return errors;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formErrors = validateForm();
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+      return;
+    }
+
+    if (loading) return;
+
+    setLoading(true);
+
+    try {
+      const response = await axiosInstance.post(
+        `${API_PATHS.AUTH.LOGIN}`,
+        formData
+      );
+
+      if (response?.data?.data?.user?.role) {
+        localStorage.setItem('role', response?.data?.data?.user?.role)
+      }
+
+      if (response?.data?.data?.token) {
+        localStorage.setItem('token', response?.data?.data?.token)
+      }
+      if (response?.data?.data?.user?._id) {
+        localStorage.setItem('userId', response?.data?.data?.user?._id)
+      }
+
+      setFormData({
+        email: "",
+        password: "",
+      })
+
+
+      // const userRole = localStorage.getItem("role");
+      if (response?.data?.data?.user?.role) {
+        setUserRole(response?.data?.data?.user?.role); // <-- VERY IMPORTANT
+      }
+      // if (response?.data?.data?.user?.role === "admin") {
+      await getUser();
+      navigate("/dashboard");
+
+
+    } catch (err) {
+      console.log("Login Error:", err);
+
+      const message =
+        err.response?.data?.message || "Login failed. Try again.";
+
+      errorToast(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
 
-  
-
 
   return (
-    <div className="h-screen flex justify-center items-center border">
+    <div onSubmit={handleSubmit} className="h-screen flex justify-center items-center border">
       {/* Left Side - Signup Form */}
       <div className="w-full lg:w-1/2 bg-white flex items-center justify-center sm:p-6 ">
         <div className="w-full max-w-md">
@@ -126,11 +181,12 @@ const Login = ({ setUserRole }) => {
 
             <button
               type="submit"
+              disabled={loading}
               // disabled={loading}
               className="w-full text-white py-2 sm:py-3 px-4 rounded-lg outline-none bg-blue-800 hover:border-blue-400 disabled:opacity-50 disabled:cursor-not-allowed"
 
             >
-              {/* {loading ? "LOGIN IN..." : "LOGIN"} */} LOGIN
+              {loading ? "LOGIN IN..." : "LOGIN"}
             </button>
           </form>
 

@@ -1,30 +1,15 @@
 import React from "react";
 import { FaTasks } from "react-icons/fa";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { MdAddTask, MdDashboard } from "react-icons/md";
 import { GrInProgress } from "react-icons/gr";
 import { LuListTodo } from "react-icons/lu";
 import { GiTeamDowngrade } from "react-icons/gi";
 import { FaRegTrashAlt } from "react-icons/fa";
-
-
-
-
-
+import { useUser } from "../../context/UserContext.jsx";
 
 const Sidebar = ({ role, isOpen, setIsOpen }) => {
-  const navigate = useNavigate()
-
-  const handleLogout = () => {
-    // Local storage clear
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    localStorage.removeItem("userId");
-
-
-    navigate("/");
-  };
-
+  const { handleLogout } = useUser()
 
   const menus = {
     user: [
@@ -33,6 +18,7 @@ const Sidebar = ({ role, isOpen, setIsOpen }) => {
       { name: "Completed", path: "completed", icon: <MdAddTask /> },
       { name: "In Progress", path: "inprogress", icon: <GrInProgress /> },
       { name: "Todo", path: "todo", icon: <LuListTodo /> },
+      { name: "Profile", path: "/profile", icon: <LuListTodo /> },
     ],
     admin: [
       { name: "Dashboard", path: "stats", icon: <MdDashboard /> },
@@ -42,6 +28,8 @@ const Sidebar = ({ role, isOpen, setIsOpen }) => {
       { name: "Todo", path: "todo", icon: <LuListTodo /> },
       { name: "Team", path: "team", icon: <GiTeamDowngrade /> },
       { name: "Trash", path: "trash", icon: <FaRegTrashAlt /> },
+      { name: "Profile", path: "/profile", icon: <LuListTodo /> },
+
     ],
   };
 
@@ -56,7 +44,7 @@ const Sidebar = ({ role, isOpen, setIsOpen }) => {
 
 
       <span className="flex gap-2 justify-center items-center h-20 text-2xl text-center border-b border-gray-200">
-        <img className="w-10 h-10" src="https://cdn-icons-png.flaticon.com/512/4345/4345800.png" alt="" /> Task Me
+        <img className="w-15" src="/images/sidebarBG.gif" alt="" /> Task Me
       </span>
       <>
         <nav className="flex-1 py-4">
@@ -81,7 +69,9 @@ const Sidebar = ({ role, isOpen, setIsOpen }) => {
           </div>
 
         </nav>
-        <button className="flex items-center  justify-center my-4 mx-2 px-16 py-2 rounded-md bg-black text-white" onClick={handleLogout}>
+        <button
+          onClick={handleLogout}
+          className="flex items-center  justify-center my-4 mx-2 px-16 py-2 rounded-md bg-black text-white">
           Logout
         </button>
       </>

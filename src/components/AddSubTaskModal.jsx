@@ -1,41 +1,58 @@
 import React, { useState } from "react";
+import { useTask } from "../context/TaskContext.jsx";
+import { errorToast } from "../utils/toast.js";
+import { useUser } from "../context/UserContext.jsx";
 
-const AddSubTaskModal = ({ openAddSubTask, onClose }) => {
+const AddSubTaskModal = ({ openAddSubTask, onClose, task }) => {
     if (!openAddSubTask) return null;
+    const { addSubTaskHandler, getAllTask } = useTask()
+    const { user } = useUser()
+    const [loading, setLoading] = useState(false)
 
     const [formData, setFormData] = useState({
         taskTitle: "",
         taskDate: "",
-        tag: ''
+        tag: ""
     });
 
     const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
-        const { name, value, files } = e.target;
+        const { name, value } = e.target;
         setFormData({
             ...formData,
-            [name]: files ? files[0] : value,
+            [name]: value,
         });
     };
 
     const validate = () => {
-        const newErrors = {};
+        const errors = {};
 
-        if (!formData.taskTitle.trim()) newErrors.taskTitle = "Title is Required";
-        if (!formData.taskDate.trim()) newErrors.taskDate = "Date is Required";
-        if (!formData.tag) newErrors.tag = "Tag is Required";
-
-        setErrors(newErrors);
-
-        return Object.keys(newErrors).length === 0;
+        if (!formData.taskTitle) errors.taskTitle = "Title is Required";
+        if (!formData.taskDate) errors.taskDate = "Date is Required";
+        if (!formData.tag) errors.tag = "Tag is Required";
+        return errors
     };
 
-    const addSubTaskHandler = () => {
-        if (!validate()) return;
-
-        console.log(formData);
-        onClose();
+    const handleAddTask = async (task) => {
+        const formErrors = validate();
+        if (Object.keys(formErrors).length > 0) {
+            setErrors(formErrors);
+            return;
+        }
+        if (loading) return;
+        setLoading(true);
+        try {
+            await addSubTaskHandler(task._id, formData);
+            console.log(formData);
+            onClose();
+            getAllTask()
+        } catch (error) {
+            errorToast("Failed to Add Sub task");
+            console.error(error);
+        } finally {
+            setLoading(false)
+        }
     };
 
     return (
@@ -117,7 +134,7 @@ const AddSubTaskModal = ({ openAddSubTask, onClose }) => {
                     </button>
 
                     <button
-                        onClick={addSubTaskHandler}
+                        onClick={() => handleAddTask(task)}
                         className="w-full px-4 py-2 rounded-md bg-blue-800 text-white hover:bg-blue-900"
                     >
                         Submit

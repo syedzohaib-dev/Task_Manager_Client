@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNotification } from "../context/NotificationContext.jsx";
 
-const NotificationModal = ({ openNotify, onClose, notifications }) => {
+const NotificationModal = ({ openNotify, onClose, }) => {
     if (!openNotify) return null;
+    const { notification,getNotifications } = useNotification()
+
+    useEffect(() => {
+        if (openNotify) {
+            getNotifications();
+        }
+    }, [openNotify]);
 
     return (
         <div className="fixed inset-0  flex justify-end items-start p-4">
@@ -14,12 +22,12 @@ const NotificationModal = ({ openNotify, onClose, notifications }) => {
                 </div>
 
                 <div className="space-y-3 max-h-80 overflow-y-auto">
-                    {notifications.length === 0 ? (
+                    {notification.length === 0 ? (
                         <p className="text-gray-500 text-sm">No notifications yet.</p>
                     ) : (
-                        notifications.map((note, i) => (
-                            <div key={i} className="p-2 border-b border-gray-200 rounded">
-                                <p className="text-sm">{note}</p>
+                        notification?.map((note, index) => (
+                            <div key={index} className="p-2 border-b border-gray-200 rounded">
+                                <p className="text-sm">{note?.message}</p>
                             </div>
                         ))
                     )}

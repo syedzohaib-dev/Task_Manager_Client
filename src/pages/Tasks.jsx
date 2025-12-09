@@ -6,67 +6,20 @@ import TaskCard from '../components/TaskCard.jsx';
 import AddTaskModal from '../components/AddTaskModal.jsx';
 import AddSubTaskModal from '../components/AddSubTaskModal.jsx';
 import { useOutletContext } from 'react-router-dom';
+import { useTask } from '../context/TaskContext.jsx';
+import { GrTask } from "react-icons/gr";
+import { useUser } from '../context/UserContext.jsx';
+
 
 
 const Tasks = () => {
   const { setOpenAddTask, setEditTask, editTask, openAddTask } = useOutletContext();
+  const { allTask } = useTask()
+  const { user } = useUser()
 
-  const tasks = [
-    {
-      title: "Design Homepage",
-      subtitle: "Landing page hero section",
-      priority: "High",
-      date: "10-Feb-2024",
-      status: "todo",                // <---- ADDED
-      tags: ["UI/UX", "Frontend", "React"],
-      stats: { comments: 5, attachments: 2, subtasks: "2/4" },
-      members: [
-        { name: "Zohaib", avatar: "/images/user1.jpg" },
-        { name: "John", avatar: "/images/user2.jpg" },
-      ],
-    },
-    {
-      title: "API Integration",
-      subtitle: "Backend connection",
-      priority: "Medium",
-      date: "12-Feb-2024",
-      status: "in-progress",         // <---- ADDED
-      tags: ["Node", "Express"],
-      stats: { comments: 1, attachments: 0, subtasks: "1/3" },
-      members: [
-        { name: "Sara", avatar: "/images/user3.jpg" },
-      ],
-    },
-    {
-      title: "Client Review",
-      subtitle: "Feedback changes",
-      priority: "Low",
-      date: "15-Feb-2024",
-      status: "completed",           // <---- ADDED
-      tags: ["Review", "UI Fixes"],
-      stats: { comments: 3, attachments: 1, subtasks: "4/4" },
-      members: [
-        { name: "Michael", avatar: "/images/user4.jpg" },
-      ],
-    }
-  ];
-
-
-
-  const fake = {
-    priority: "High",
-    title: "Website Project Proposal Review",
-    subtitle: "Blog App Dashboard",
-    date: "7-Feb-2024",
-    tags: ["Design", "Website App"],
-    stats: { comments: 4, attachments: 3, subtasks: "0/2" },
-    members: [
-      { name: "JS", avatar: "https://i.pravatar.cc/40?img=12" },
-      { name: "JD", avatar: "https://i.pravatar.cc/40?img=32" },
-      { name: "CA", avatar: "https://i.pravatar.cc/40?img=52" },
-    ],
-  };
-
+  const handleEdit = async () => {
+    console.log('edit chala')
+  }
 
   return (
     <>
@@ -85,7 +38,12 @@ const Tasks = () => {
           <p className="text-2xl">Tasks</p>
           <button
             onClick={() => setOpenAddTask(true)}
-            type="button" className='bg-blue-800 text-white rounded-md flex justify-center items-center text-md px-2 py-2 gap-1'>
+            disabled={user?.role !== "admin"}
+            type="button"
+            // className='bg-blue-800 text-white rounded-md flex justify-center items-center text-md px-2 py-2 gap-1'
+            className={`px-4 py-2 rounded flex justify-center items-center gap-1 ${user?.role === "admin" ? "bg-blue-600 text-white" : "bg-gray-300 cursor-not-allowed"
+              }`}
+          >
             <IoMdAdd className='text-white' />
             Create Task
           </button>
@@ -112,7 +70,7 @@ const Tasks = () => {
               <p className="text-sm font-semibold text-gray-700">To Do</p>
             </div>
             <button className="w-6 h-6 flex items-center justify-center text-lg">
-              <IoMdAdd />
+              <GrTask />
             </button>
           </div>
 
@@ -123,7 +81,7 @@ const Tasks = () => {
               <p className="text-sm font-semibold text-gray-700">In Progress</p>
             </div>
             <button className="w-6 h-6 flex items-center justify-center text-lg">
-              <IoMdAdd />
+              <GrTask />
             </button>
           </div>
 
@@ -134,33 +92,31 @@ const Tasks = () => {
               <p className="text-sm font-semibold text-gray-700">Completed</p>
             </div>
             <button className="w-6 h-6 flex items-center justify-center text-lg">
-              <IoMdAdd />
+              <GrTask />
             </button>
           </div>
 
         </div>
 
 
-
         <div className="w-full flex gap-4 my-5 justify-center flex-wrap pb-3">
+          {(allTask?.length === 0) && (
+            <p className='w-full h-20 m-5 text-center shadow-md px-8 py-5 bg-red-100 text-black text-2xl rounded'>
+              No Task Found
+            </p>
+          )}
 
-
-
-          <div className="flex flex-wrap gap-4">
-            {tasks.map((item, index) => (
+          {allTask
+            ?.filter((item) => item.isTrashed === false)
+            .map((item, index) => (
               <TaskCard
                 key={index}
                 task={item}
                 setEditTask={setEditTask}
                 setOpenAddTask={setOpenAddTask}
+                handleEdit={handleEdit}
               />
             ))}
-          </div>
-
-
-
-
-
         </div>
 
 

@@ -1,22 +1,38 @@
 import React, { useState } from "react";
+import { useTask } from "../context/TaskContext.jsx";
 
-const Activities = () => {
+const Activities = ({ task }) => {
+    const { getTask } = useTask()
+    const { addActivityHandler } = useTask()
     const [error, setError] = useState('')
     const [formData, setFormData] = useState({
         status: "",
-        description: "",
+        message: "",
     });
-
     const [activities, setActivities] = useState([]);
 
-    const handleSubmit = (e) => {
+    const handleAddActivities = async (e, task) => {
         e.preventDefault();
 
-        if (!formData.status || !formData.description.trim()) return setError('Fill out this field');
+        if (!formData.status || !formData.message) {
+            return setError("Fill out this field");
+        }
 
-        setActivities([...activities, formData]);
-        setFormData({ status: "", description: "" }); // Reset
-        setError('')
+        try {
+            setError("");
+            const payload = {
+                status: formData.status,
+                message: formData.message,
+            };
+
+            await addActivityHandler(task._id, payload);
+            await getTask(task._id);
+
+            setFormData({ status: "", message: "" });
+
+        } catch (err) {
+            setError("Something went wrong");
+        }
     };
 
     return (
@@ -30,20 +46,19 @@ const Activities = () => {
                     <div className="relative pl-6">
 
 
-                        {activities.length > 0 && (
+                        {task.activity?.length > 0 && (
                             <div className="absolute top-0 left-2 w-1 bg-gray-300 h-full rounded"></div>
                         )}
-
-                        {activities.map((item, index) => (
+                        {task.activity?.map((item, index) => (
                             <div key={index} className="mb-6 relative">
 
                                 <div className="absolute -left-5 top-2 w-4 h-4 bg-blue-800 rounded-full border-2 border-white"></div>
 
                                 <div className="bg-gray-50 p-4 rounded-lg shadow-sm text-wrap">
                                     <p className="text-sm text-gray-600">
-                                        <span className="font-semibold"> <b> Status:</b> </span>{item.status}
+                                        <span className="font-semibold"><b>Status:</b> </span>{item.status}
                                     </p>
-                                    <p className="mt-2 wrap-break-word">{item.description}</p>
+                                    <p className="mt-2 wrap-break-word">{item.message}</p>
                                 </div>
                             </div>
                         ))}
@@ -55,7 +70,7 @@ const Activities = () => {
                 <div className="bg-white p-6 rounded-xl shadow">
                     <h2 className="text-lg font-semibold mb-4">Add Activity</h2>
 
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    <form onSubmit={(e) => handleAddActivities(e, task)} className="space-y-4">
 
                         <div className="space-y-2">
                             {["Started", "Completed", "In Progress", "Commented", "Bug", "Assigned"].map((label) => (
@@ -77,9 +92,9 @@ const Activities = () => {
                             placeholder="Write details here..."
                             className="w-full p-3 border border-gray-300 hover:border-blue-800 rounded-lg outline-none"
                             rows={4}
-                            value={formData.description}
+                            value={formData.message}
                             onChange={(e) =>
-                                setFormData({ ...formData, description: e.target.value })
+                                setFormData({ ...formData, message: e.target.value })
                             }
                         ></textarea>
                         <div className="h-6 text-sm text-red-600 w-full">

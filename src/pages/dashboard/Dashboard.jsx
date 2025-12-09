@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Sidebar from "../../components/common/Sidebar.jsx";
 import { Outlet, useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
@@ -6,8 +6,11 @@ import { FaBars } from "react-icons/fa";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import NotificationModal from "../../components/NotificationModal.jsx";
 import ProfileModal from "../../components/ProfileModal.jsx";
+import { useUser } from "../../context/UserContext.jsx";
+import { useNotification } from "../../context/NotificationContext.jsx";
 
 const Dashboard = ({ role }) => {
+    const { user } = useUser()
     const navigate = useNavigate()
     const [isOpen, setIsOpen] = useState(false);
     const [allUser, setAllUser] = useState([])
@@ -16,12 +19,9 @@ const Dashboard = ({ role }) => {
 
     const [openAddTask, setOpenAddTask] = useState(false)
     const [editTask, setEditTask] = useState(false)
+    const { notification } = useNotification()
 
-    const notifications = [
-        "New order received",
-        "Appointment confirmed",
-        "Payment received",
-    ];
+
 
 
 
@@ -30,7 +30,6 @@ const Dashboard = ({ role }) => {
             <NotificationModal
                 openNotify={openNotify}
                 onClose={() => setOpenNotify(false)}
-                notifications={notifications}
             />
             <ProfileModal
                 openProfile={openProfile}
@@ -51,7 +50,7 @@ const Dashboard = ({ role }) => {
                 )}
 
                 <div className="flex-1 flex flex-col overflow-hidden">
-                    <header className={`bg-white shadow-md flex items-center justify-between md:justify-end px-6 py-1`}>
+                    <header className={`bg-gray-100 shadow-md flex items-center justify-between md:justify-end px-6 py-1`}>
                         <button
                             onClick={() => setIsOpen(!isOpen)}
                             className="text-2xl text-blue-600 md:hidden focus:outline-none"
@@ -64,9 +63,9 @@ const Dashboard = ({ role }) => {
                                 onClick={() => setOpenNotify(true)}
                                 className="relative text-[1.2rem] bg-gray-50 rounded-md w-8 h-8 text-black flex justify-center items-center">
                                 <IoMdNotificationsOutline />
-                                {notifications.length > 0 && (
+                                {notification.length > 0 && (
                                     <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
-                                        {notifications.length}
+                                        {notification?.length || 0}
                                     </span>
                                 )}
                             </button>
@@ -76,15 +75,25 @@ const Dashboard = ({ role }) => {
                                 className=""
                                 onClick={() => setOpenProfile(true)}
                             >
-                                <img
-                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkAJEkJQ1WumU0hXNpXdgBt9NUKc0QDVIiaw&s"
-                                    alt="Profile"
-                                    className="w-10 h-10 rounded-full   border-gray-300"
-                                />
+                                {
+                                    user?.profileImgURL ?
+                                        (<img
+                                            src={user?.profileImgURL}
+                                            alt="Profile"
+                                            className="w-10 h-10 rounded-full   border-gray-300"
+                                        />)
+                                        :
+                                        (<img
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkAJEkJQ1WumU0hXNpXdgBt9NUKc0QDVIiaw&s"
+                                            alt="Profile"
+                                            className="w-10 h-10 rounded-full   border-gray-300"
+                                        />)
+                                }
+
                             </button>
                             <div className="flex flex-col">
                                 <span className="text-gray-800 font-semibold text-sm sm:text-base flex">
-                                    {/* {user?.name} */} Zohaib
+                                    {/* {user?.name} */} {user?.fullName}
                                 </span>
                                 <span className="text-gray-500 text-xs sm:text-sm flex ">{role}</span>
                             </div>

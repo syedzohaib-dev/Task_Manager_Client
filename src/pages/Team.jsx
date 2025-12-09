@@ -5,11 +5,22 @@ import TeamTable from '../components/TeamTable.jsx'
 
 const Team = () => {
   const [openAddUser, setOpenAddUser] = useState(false)
+  const [editUser, setEditUser] = useState(null)
+
+
+  const handleEdit = (user) => {
+    setEditUser(user)
+    setOpenAddUser(true)
+  }
   return (
     <>
       <AddNewUserModal
         openAddUser={openAddUser}
-        onClose={() => setOpenAddUser(false)}
+        onClose={() => {
+          setOpenAddUser(false)
+          setEditUser(null)
+        }}
+        editUser={editUser}
       />
       <div className="h-screen overflow-y-auto bg-gray-100 p-6 hide-scrolbar">
 
@@ -23,7 +34,7 @@ const Team = () => {
           </button>
         </div>
 
-        <TeamTable />
+        <TeamTable handleEdit={handleEdit} />
 
       </div>
     </>

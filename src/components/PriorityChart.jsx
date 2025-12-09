@@ -8,58 +8,32 @@ import {
     ResponsiveContainer,
     CartesianGrid,
 } from "recharts";
+import { useTask } from "../context/TaskContext.jsx";
+
 
 const PriorityChart = () => {
-    // if (!incomeData || incomeData.length === 0) {
-    //     return (
-    //         <div className="bg-white p-6 rounded-2xl shadow-md w-full max-w-4xl mx-auto text-center text-gray-500">
-    //             <h2 className="text-lg font-semibold mb-4">No Priority Overview</h2>
-    //             <p>No data found</p>
-    //         </div>
-    //     );
-    // }
+    const { allTask } = useTask()
+    const high = allTask?.filter(t => t.priorityLevel === "High").length;
+    const medium = allTask?.filter(t => t.priorityLevel === "Medium").length;
+    const normal = allTask?.filter(t => t.priorityLevel === "Normal").length;
 
-    const taskData = [
-        { id: 1, title: "Fix login bug", priority: "High", createdAt: "2025-01-01" },
-        { id: 2, title: "Update dashboard UI", priority: "Medium", createdAt: "2025-01-01" },
-        { id: 3, title: "Add invoice filters", priority: "High", createdAt: "2025-01-02" },
-        { id: 4, title: "Improve API speed", priority: "Low", createdAt: "2025-01-02" },
-        { id: 5, title: "Create team module", priority: "High", createdAt: "2025-01-03" },
-        { id: 6, title: "Add pagination", priority: "Medium", createdAt: "2025-01-03" },
+    const data = [
+        { name: "High", value: high },
+        { name: "Medium", value: medium },
+        { name: "Normal", value: normal },
     ];
-
-
-
-    // Grouping by date
-    const grouped = taskData.reduce((acc, task) => {
-        const date = new Date(task.createdAt).toLocaleDateString("en-GB", {
-            day: "2-digit",
-            month: "short",
-        });
-
-        acc[date] = (acc[date] || 0) + 1;
-        return acc;
-    }, {});
-
-    // Convert to chart format
-    const data = Object.keys(grouped).map((date) => ({
-        date: date,
-        amount: grouped[date],
-    }));
-
-
 
     return (
         <div className="bg-white p-6 my-6  rounded-2xl shadow-md w-full mx-auto">
             <p className="text-2xl text-gray-600 font-semibold mb-4">Chrt by priority</p>
-            <div className="h-100 w-full">
+            <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="date" />
+                        <XAxis dataKey='name' />
                         <YAxis />
                         <Tooltip />
-                        <Bar dataKey="amount" fill="#193cb8" radius={[6, 6, 0, 0]} />
+                        <Bar dataKey='value' fill="#193cb8" radius={[6, 6, 0, 0]} />
                     </BarChart>
                 </ResponsiveContainer>
             </div>
