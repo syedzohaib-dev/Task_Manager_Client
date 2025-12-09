@@ -134,10 +134,11 @@ const AddSubTaskModal = ({ openAddSubTask, onClose, task }) => {
                     </button>
 
                     <button
+                        disabled={loading}
                         onClick={() => handleAddTask(task)}
                         className="w-full px-4 py-2 rounded-md bg-blue-800 text-white hover:bg-blue-900"
                     >
-                        Submit
+                        {loading ? 'Submiting...' : "Submit"}
                     </button>
                 </div>
 

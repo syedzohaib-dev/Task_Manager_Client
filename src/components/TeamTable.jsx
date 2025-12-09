@@ -8,7 +8,7 @@ const TeamTable = ({ handleEdit }) => {
     const { allUser, deleteUser } = useUser()
     return (
         <>
-            <div className="overflow-auto w-full rounded-2xl mt-10 shadow-md">
+            <div className="overflow-auto w-full rounded-2xl my-10 shadow-md">
                 <table className="w-full min-w-[800px]">
 
                     {/* Table Header */}
