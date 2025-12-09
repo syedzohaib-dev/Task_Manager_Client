@@ -47,7 +47,6 @@ export const NotificationProvider = ({ children }) => {
             return res.data.data
         } catch (error) {
             console.log(error);
-            errorToast(error.message);
         }
     };
 
