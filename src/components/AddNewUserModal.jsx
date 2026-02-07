@@ -130,7 +130,7 @@ const AddNewUserModal = ({ openAddUser, onClose, editUser }) => {
             const message =
                 err.response?.data?.message || "Signup failed. Try again.";
 
-            errorToast(message);
+            errorToast("Signup failed. Try again." || message);
 
         } finally {
             setLoading(false);

@@ -102,7 +102,7 @@ const Login = ({ setUserRole }) => {
       const message =
         err.response?.data?.message || "Login failed. Try again.";
 
-      errorToast(err.message);
+      errorToast("Login failed. Try again." || err?.message);
     } finally {
       setLoading(false);
     }
@@ -113,7 +113,7 @@ const Login = ({ setUserRole }) => {
   return (
     <div onSubmit={handleSubmit} className="h-screen flex justify-center items-center border">
       {/* Left Side - Signup Form */}
-      <div className="w-full lg:w-1/2 bg-white flex items-center justify-center sm:p-6 ">
+      <div className="w-[60%] lg:w-1/2 bg-white flex items-center justify-center sm:p-6 ">
         <div className="w-full max-w-md">
           {/* Header */}
           <div className="text-center mb-6 sm:mb-8">
@@ -191,10 +191,18 @@ const Login = ({ setUserRole }) => {
           </form>
 
           {/* Login Link */}
-
+          <div className="w-full border text-center border-gray-300 rounded-2xl mt-5 shadow-md bg-blue-50">
+            <h3 className='mb-3'> <span className='font-bold'>Admin</span> only admin can add member</h3>
+            <p>Email: zohaib@gmail.com</p>
+            <p>Password: 123123123</p>
+          </div>
         </div>
       </div >
+      <div className="w-[40%] h-screen flex justify-center items-center">
+        <img src="/images/login-bg.webp" className='w-120 h-120' alt="" srcset="" />
 
+
+      </div>
 
     </div >
   );
