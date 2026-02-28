@@ -9,7 +9,7 @@ const Inprogress = () => {
 
   return (
     <>
-      <div className="w-full h-screen overflow-y-auto bg-gray-100 flex gap-4 justify-center flex-wrap py-2 px-2">
+      <div className="w-full h-screen overflow-y-auto bg-gray-100 flex gap-4 justify-center flex-wrap py-2 px-2 hide-scrollbar">
         {(allTask.length === 0) && (
           <p className='w-full h-20 m-5 text-center shadow-md px-8 py-5 bg-red-100 text-black text-2xl rounded'>
             No <b>InProgress</b> Task Found

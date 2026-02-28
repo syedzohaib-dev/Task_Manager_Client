@@ -15,7 +15,7 @@ export const UserProvider = ({ children }) => {
 
     const getUser = async () => {
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("task-token");
 
             if (!token) {
                 setLoading(false);
@@ -44,7 +44,7 @@ export const UserProvider = ({ children }) => {
 
     const getAllUser = async () => {
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("task-token");
 
             if (!token) {
                 setLoading(false);
@@ -77,7 +77,7 @@ export const UserProvider = ({ children }) => {
         try {
             setLoading(true);
 
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("task-token");
 
             if (!token) {
                 setLoading(false);
@@ -105,11 +105,11 @@ export const UserProvider = ({ children }) => {
 
     const handleProfileUpload = async (file) => {
         if (!file) return;
-        const userId = localStorage.getItem('userId')
+        const userId = localStorage.getItem('task-userId')
 
         try {
             setUploaderLoading(true)
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("task-token");
 
             const formData = new FormData();
             formData.append("image", file);
@@ -141,7 +141,7 @@ export const UserProvider = ({ children }) => {
 
     const handleLogout = async () => {
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("task-token");
 
 
             const res = await axiosInstance.post(
@@ -154,9 +154,9 @@ export const UserProvider = ({ children }) => {
                 }
             );
 
-            localStorage.removeItem("token");
-            localStorage.removeItem("userId");
-            localStorage.removeItem("role");
+            localStorage.removeItem("task-token");
+            localStorage.removeItem("task-userId");
+            localStorage.removeItem("task-role");
 
             setUser(null);
 

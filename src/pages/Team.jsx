@@ -22,7 +22,7 @@ const Team = () => {
         }}
         editUser={editUser}
       />
-      <div className="h-screen overflow-y-auto bg-gray-100 p-6 hide-scrolbar">
+      <div className="h-screen overflow-y-auto bg-gray-100 p-6 hide-scrollbar">
 
         <div className="w-full flex justify-between px-2">
           <p className="text-2xl">Team</p>

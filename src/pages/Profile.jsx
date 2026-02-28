@@ -7,8 +7,15 @@ import { MdFileUploadOff } from "react-icons/md";
 
 
 const Profile = () => {
-  const { user, setUploaderLoading, uploaderLoading } = useUser()
+  const { user, setUploaderLoading, uploaderLoading, loading } = useUser()
   const { handleProfileUpload } = useUser()
+
+  if (loading)
+    return (
+      <div className="fixed inset-0 flex justify-center items-center backdrop-blur-sm  z-50">
+        <span className="w-10 h-10 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></span>
+      </div>
+    );
 
   if (user === null) {
     return (
@@ -26,7 +33,7 @@ const Profile = () => {
     );
   }
 
-  
+
 
   return (
     <div className="w-full h-screen  px-50 py-10 bg-gray-100">

@@ -36,8 +36,8 @@ const Activities = ({ task }) => {
     };
 
     return (
-        <div className="w-full bg-gray-100 font-sans">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="w-full bg-gray-100 font-sans hide-scrollbar">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 hide-scrollbar">
 
                 {/* LEFT SIDE – Activities List */}
                 <div className="md:col-span-2 h-[500px] overflow-auto hide-scrollbar bg-white p-6 rounded-xl shadow">
@@ -67,12 +67,12 @@ const Activities = ({ task }) => {
                 </div>
 
                 {/* RIGHT SIDE – Form */}
-                <div className="bg-white p-6 rounded-xl shadow">
+                <div className="bg-white p-6 rounded-xl shadow ">
                     <h2 className="text-lg font-semibold mb-4">Add Activity</h2>
 
                     <form onSubmit={(e) => handleAddActivities(e, task)} className="space-y-4">
 
-                        <div className="space-y-2">
+                        <div className="space-y-2 ">
                             {["Started", "Completed", "In Progress", "Commented", "Bug", "Assigned"].map((label) => (
                                 <label key={label} className="flex items-center gap-2">
                                     <input

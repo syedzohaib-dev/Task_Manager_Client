@@ -11,7 +11,7 @@ export const NotificationProvider = ({ children }) => {
 
     const createNotification = async (taskId, assignTaskTo) => {
         try {
-            const token = localStorage.getItem('token')
+            const token = localStorage.getItem('task-token')
             if (assignTaskTo && assignTaskTo.length > 0) {
                 const res = await axiosInstance.post(`${API_PATHS.NOTIFICATION.CREATE_NOTI}`,
                     {
@@ -33,7 +33,7 @@ export const NotificationProvider = ({ children }) => {
 
     const getNotifications = async () => {
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("task-token");
             const res = await axiosInstance.get(
                 `${API_PATHS.NOTIFICATION.GET_NOTI}`,
                 {

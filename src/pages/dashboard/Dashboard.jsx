@@ -80,13 +80,13 @@ const Dashboard = ({ role }) => {
                                         (<img
                                             src={user?.profileImgURL}
                                             alt="Profile"
-                                            className="w-10 h-10 rounded-full   border-gray-300"
+                                            className="w-10 h-10 rounded-full border-gray-300"
                                         />)
                                         :
                                         (<img
                                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkAJEkJQ1WumU0hXNpXdgBt9NUKc0QDVIiaw&s"
                                             alt="Profile"
-                                            className="w-10 h-10 rounded-full   border-gray-300"
+                                            className="w-10 h-10 rounded-full border-gray-300"
                                         />)
                                 }
 

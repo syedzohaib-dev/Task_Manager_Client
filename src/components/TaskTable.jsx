@@ -4,6 +4,7 @@ import { useTask } from '../context/TaskContext.jsx';
 const TaskTable = () => {
     const { allTask } = useTask()
 
+
     const getPriorityColor = (priority) => {
         switch (priority?.toLowerCase()) {
             case "high":

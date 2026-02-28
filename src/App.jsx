@@ -27,7 +27,7 @@ import { NotificationProvider } from './context/NotificationContext.jsx';
 const App = () => {
   const [userRole, setUserRole] = useState(null)
   useEffect(() => {
-    const role = localStorage.getItem("role");
+    const role = localStorage.getItem("task-role");
     if (role) setUserRole(role);
   }, []);
 

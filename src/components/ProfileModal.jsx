@@ -17,9 +17,9 @@ const ProfileModal = ({ openProfile, onClose }) => {
                     <div className="p-2 border-b border-gray-200 rounded">
                         <Link to="/profile">  <p className="text-sm"> Profile </p> </Link>
                     </div>
-                    <div className="p-2 border-b border-gray-200 rounded">
+                    {/* <div className="p-2 border-b border-gray-200 rounded">
                         <p className="text-sm">Change Password</p>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div >

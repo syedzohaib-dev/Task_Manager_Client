@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
 import { useTask } from "../context/TaskContext";
 
 const TaskStatusButtons = ({ task }) => {
-    const [status, setStatus] = useState(task.status);
+    const [status, setStatus] = useState(task.taskStage);
     const [loading, setLoading] = useState(false);
     const { changeTaskStatus } = useTask()
 
@@ -13,7 +13,7 @@ const TaskStatusButtons = ({ task }) => {
 
 
         try {
-            await changeTaskStatus(task._id, { taskStage: taskStage })
+            await changeTaskStatus(task._id, { taskStage })
             setStatus(taskStage);
         } catch (error) {
             console.log(error);
@@ -21,7 +21,9 @@ const TaskStatusButtons = ({ task }) => {
             setLoading(false);
         }
     };
-
+    // useEffect(() => {
+    //     setStatus(task.taskStage);
+    // }, [task]);
     const getButtonStyle = (btnStatus) => {
         if (btnStatus === status) {
             return "bg-blue-600 text-white border-blue-600 cursor-default";
@@ -32,7 +34,7 @@ const TaskStatusButtons = ({ task }) => {
 
     return (
         <div className="flex gap-2 mt-2 w-full justify-center">
-            <button
+            {/* <button
                 onClick={() => updateStatus(task, 'ToDo')}
                 disabled={loading}
                 className={`px-4 py-2 rounded-lg border text-sm font-semibold transition-all duration-200`}
@@ -42,17 +44,40 @@ const TaskStatusButtons = ({ task }) => {
 
 
             <button
-                onClick={() => updateStatus(task, 'InProcess')}
+                onClick={() => updateStatus(task, 'InProgress')}
                 disabled={loading}
                 className={`px-4 py-2 rounded-lg border text-sm font-semibold transition-all duration-200`}
             >
-                InProcess
+                InProgress
             </button>
 
             <button
                 onClick={() => updateStatus(task, 'Completed')}
                 disabled={loading}
                 className={`px-4 py-2 rounded-lg border text-sm font-semibold transition-all duration-200`}
+            >
+                Completed
+            </button> */}
+            <button
+                onClick={() => updateStatus(task, "ToDo")}
+                disabled={loading}
+                className={`px-4 py-2 rounded-lg border text-sm font-semibold transition-all duration-200 ${getButtonStyle("ToDo")}`}
+            >
+                ToDo
+            </button>
+
+            <button
+                onClick={() => updateStatus(task, "InProgress")}
+                disabled={loading}
+                className={`px-4 py-2 rounded-lg border text-sm font-semibold transition-all duration-200 ${getButtonStyle("InProgress")}`}
+            >
+                InProgress
+            </button>
+
+            <button
+                onClick={() => updateStatus(task, "Completed")}
+                disabled={loading}
+                className={`px-4 py-2 rounded-lg border text-sm font-semibold transition-all duration-200 ${getButtonStyle("Completed")}`}
             >
                 Completed
             </button>

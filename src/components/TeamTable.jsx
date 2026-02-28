@@ -5,7 +5,13 @@ import { useUser } from '../context/UserContext.jsx';
 
 const TeamTable = ({ handleEdit }) => {
 
-    const { allUser, deleteUser } = useUser()
+    const { allUser, deleteUser, loading } = useUser()
+    if (loading)
+        return (
+            <div className="fixed inset-0 flex justify-center items-center backdrop-blur-sm  z-50">
+                <span className="w-10 h-10 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></span>
+            </div>
+        );
     return (
         <>
             <div className="overflow-auto w-full rounded-2xl my-10 shadow-md">

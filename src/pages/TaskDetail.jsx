@@ -20,11 +20,16 @@ const TaskDetail = () => {
     getTask(id)
   }, [id]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+  return (
+    <div className="fixed inset-0 flex justify-center items-center backdrop-blur-sm  z-50">
+      <span className="w-10 h-10 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></span>
+    </div>
+  );
   if (!task) return <div>Task not found</div>;
 
   return (
-    <div className="w-full h-screen overflow-auto hide-scrollbar bg-gray-100 p-4 md:p-8">
+    <div className="w-full min-h-screen hide-scrollbar bg-gray-100 p-4 md:p-8">
 
       {/* Header */}
       <div className="w-full p-2">

@@ -18,7 +18,7 @@ const AddNewUserModal = ({ openAddUser, onClose, editUser }) => {
     const toggleShowPassword = () => {
         setShowPassord(!showPassword)
     };
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('task-token')
 
     const [formData, setFormData] = useState(
         editUser

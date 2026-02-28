@@ -21,7 +21,7 @@ export const TaskProvider = ({ children }) => {
     const getTask = async (id) => {
         try {
             setLoading(true);
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("task-token");
 
             if (!token) {
                 setLoading(false);
@@ -51,8 +51,8 @@ export const TaskProvider = ({ children }) => {
     const getAllTask = async () => {
         try {
             setLoading(true);
-            const token = localStorage.getItem("token");
-            const role = localStorage.getItem("role");
+            const token = localStorage.getItem("task-token");
+            const role = localStorage.getItem("task-role");
 
             if (!token) {
                 setLoading(false);
@@ -92,7 +92,7 @@ export const TaskProvider = ({ children }) => {
     const getStats = async (id) => {
         try {
             setLoading(true);
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("task-token");
 
             if (!token) {
                 setLoading(false);
@@ -120,7 +120,7 @@ export const TaskProvider = ({ children }) => {
 
     const addComment = async (taskId, commentText) => {
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("task-token");
             if (!token) return;
 
             const response = await axiosInstance.post(
@@ -145,7 +145,7 @@ export const TaskProvider = ({ children }) => {
     const moveToTrash = async (taskId) => {
         try {
             setLoading(true);
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("task-token");
 
             if (!token) {
                 setLoading(false);
@@ -177,7 +177,7 @@ export const TaskProvider = ({ children }) => {
     const restoreFromTrash = async (taskId) => {
         try {
             setLoading(true);
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("task-token");
 
             if (!token) {
                 setLoading(false);
@@ -208,7 +208,7 @@ export const TaskProvider = ({ children }) => {
     const deleteTaskHandler = async (taskId) => {
         try {
             setLoading(true);
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("task-token");
 
             if (!token) {
                 setLoading(false);
@@ -239,7 +239,7 @@ export const TaskProvider = ({ children }) => {
     const duplicateTaskHandler = async (taskId) => {
         try {
             setLoading(true);
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("task-token");
 
             if (!token) {
                 setLoading(false);
@@ -270,7 +270,7 @@ export const TaskProvider = ({ children }) => {
     const addSubTaskHandler = async (taskId, formData) => {
         try {
             setLoading(true);
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("task-token");
 
             if (!token) {
                 setLoading(false);
@@ -301,7 +301,7 @@ export const TaskProvider = ({ children }) => {
     const addActivityHandler = async (taskId, payload) => {
         try {
             setLoading(true);
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("task-token");
 
             const res = await axiosInstance.post(
                 `${API_PATHS.TASK.ADD_ACTIVITY}/${taskId}`,
@@ -325,7 +325,7 @@ export const TaskProvider = ({ children }) => {
     const changeTaskStatus = async (taskId, taskStage) => {
         console.log("API call to:", `${API_PATHS.TASK.UPDATE_STATUS}/${taskId}`);
         try {
-            const token = localStorage.getItem('token')
+            const token = localStorage.getItem('task-token')
             const res = await axiosInstance.put(`${API_PATHS.TASK.UPDATE_STATUS}/${taskId}`,
                 taskStage,
                 {

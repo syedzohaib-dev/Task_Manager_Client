@@ -71,14 +71,14 @@ const Login = ({ setUserRole }) => {
       );
 
       if (response?.data?.data?.user?.role) {
-        localStorage.setItem('role', response?.data?.data?.user?.role)
+        localStorage.setItem('task-role', response?.data?.data?.user?.role)
       }
 
       if (response?.data?.data?.token) {
-        localStorage.setItem('token', response?.data?.data?.token)
+        localStorage.setItem('task-token', response?.data?.data?.token)
       }
       if (response?.data?.data?.user?._id) {
-        localStorage.setItem('userId', response?.data?.data?.user?._id)
+        localStorage.setItem('task-userId', response?.data?.data?.user?._id)
       }
 
       setFormData({
@@ -87,7 +87,7 @@ const Login = ({ setUserRole }) => {
       })
 
 
-      // const userRole = localStorage.getItem("role");
+      // const userRole = localStorage.getItem("task-role");
       if (response?.data?.data?.user?.role) {
         setUserRole(response?.data?.data?.user?.role); // <-- VERY IMPORTANT
       }
