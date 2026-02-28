@@ -111,9 +111,9 @@ const Login = ({ setUserRole }) => {
 
 
   return (
-    <div onSubmit={handleSubmit} className="h-screen flex justify-center items-center border">
+    <div onSubmit={handleSubmit} className="h-screen flex justify-center items-center ">
       {/* Left Side - Signup Form */}
-      <div className="w-[60%] lg:w-1/2 bg-white flex items-center justify-center sm:p-6 ">
+      <div className="w-[60%] flex items-center justify-center sm:p-6 ">
         <div className="w-full max-w-md">
           {/* Header */}
           <div className="text-center mb-6 sm:mb-8">
@@ -198,9 +198,9 @@ const Login = ({ setUserRole }) => {
           </div>
         </div>
       </div >
-      <div className="w-[40%] h-screen flex justify-center items-center">
-        <img src="/images/login-bg.webp" className='w-120 h-120' alt="" srcset="" />
-
+      <div className="w-[50%] h-screen flex justify-center items-center">
+        <img src="https://ideascale.com/wp-content/uploads/2022/03/Task-Management-Advantages-scaled.jpg"
+          className='w-full ' alt="" srcset="" />
 
       </div>
 
