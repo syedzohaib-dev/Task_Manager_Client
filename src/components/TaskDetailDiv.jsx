@@ -28,7 +28,7 @@ const TaskDetailDiv = ({ task }) => {
     return (
         <>
 
-            <div className="w-full mx-auto bg-white p-6 md:p-8 rounded-lg shadow mb-10">
+            <div className="w-full mx-auto bg-white p-6 md:p-8 rounded-lg shadow mb-10 ">
                 <TaskStatusButtons task={task} />
                 <h1 className="text-2xl font-semibold text-gray-900 mb-1">
                     {task.taskTitle}

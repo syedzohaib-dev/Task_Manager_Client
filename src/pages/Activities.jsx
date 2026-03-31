@@ -36,7 +36,7 @@ const Activities = ({ task }) => {
     };
 
     return (
-        <div className="w-full bg-gray-100 font-sans hide-scrollbar">
+        <div className="w-full bg-gray-100 font-sans">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 hide-scrollbar">
 
                 {/* LEFT SIDE – Activities List */}

@@ -29,7 +29,7 @@ const TaskDetail = () => {
   if (!task) return <div>Task not found</div>;
 
   return (
-    <div className="w-full min-h-screen hide-scrollbar bg-gray-100 p-4 md:p-8">
+    <div className="w-full min-h-screen hide-scrollbar overflow-y-auto bg-gray-100 p-4 md:p-8 ">
 
       {/* Header */}
       <div className="w-full p-2">

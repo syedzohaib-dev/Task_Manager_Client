@@ -29,7 +29,7 @@ const UserTable = () => {
 
                     {/* Table Body */}
                     <tbody className="bg-white divide-y divide-gray-200 ">
-                        {allUser.map((user, index) => (
+                        {allUser?.map((user, index) => (
                             <tr key={index} className="hover:bg-gray-50 transition-colors">
                                 {/* User Info Column */}
                                 <td className="px-6 py-2 text-center">
