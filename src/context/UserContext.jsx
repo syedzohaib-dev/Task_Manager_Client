@@ -12,23 +12,13 @@ export const UserProvider = ({ children }) => {
     const [allUser, setAllUser] = useState([])
     const [uploaderLoading, setUploaderLoading] = useState(false)
     const navigate = useNavigate()
+    const token = localStorage.getItem("task-token");
 
     const getUser = async () => {
         try {
-            const token = localStorage.getItem("task-token");
-
-            if (!token) {
-                setLoading(false);
-                return;
-            }
+            if (!token) return;
             setLoading(true)
-
-            const response = await axiosInstance.get(`${API_PATHS.USER.GET_USER}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
+            const response = await axiosInstance.get(`${API_PATHS.USER.GET_USER}`);
             setUser(response?.data?.data);
         } catch (error) {
             console.log("Failed to fetch user:", error);
@@ -38,26 +28,20 @@ export const UserProvider = ({ children }) => {
         }
     };
     useEffect(() => {
-        getUser();
-    }, []);
+        if (token) {
+            getUser();
+        }
+
+    }, [token]);
 
 
     const getAllUser = async () => {
         try {
-            const token = localStorage.getItem("task-token");
-
-            if (!token) {
-                setLoading(false);
-                return;
-            }
-
-            const response = await axiosInstance.get(`${API_PATHS.USER.GET_ALL_USERS}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
+            if (!token) return;
+            setLoading(true);
+            const response = await axiosInstance.get(`${API_PATHS.USER.GET_ALL_USERS}`);
             setAllUser(response?.data?.data);
+            // console.log('all users:', response?.data?.data);
         } catch (error) {
             console.log("Failed to fetch user:", error);
             setAllUser(null);
@@ -66,8 +50,11 @@ export const UserProvider = ({ children }) => {
         }
     };
     useEffect(() => {
-        getAllUser()
-    }, [])
+        if (token) {
+            getAllUser()
+        }
+
+    }, [token])
 
 
     const deleteUser = async (userId) => {
@@ -75,25 +62,10 @@ export const UserProvider = ({ children }) => {
             return;
         }
         try {
+            if (!token) return;
             setLoading(true);
-
-            const token = localStorage.getItem("task-token");
-
-            if (!token) {
-                setLoading(false);
-                return;
-            }
-
-            const response = await axiosInstance.delete(
-                `${API_PATHS.USER.DELETE_USER}/${userId}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+            const response = await axiosInstance.delete(`${API_PATHS.USER.DELETE_USER}/${userId}`);
             setAllUser((prev) => prev.filter((user) => user._id !== userId));
-
         } catch (error) {
             console.log("Failed to delete user:", error);
             errorToast(error?.response?.data?.message || "Failed to delete user");
@@ -108,29 +80,15 @@ export const UserProvider = ({ children }) => {
         const userId = localStorage.getItem('task-userId')
 
         try {
+            if (!token) return;
             setUploaderLoading(true)
-            const token = localStorage.getItem("task-token");
-
             const formData = new FormData();
             formData.append("image", file);
-
-            const response = await axiosInstance.post(
-                `${API_PATHS.USER.UPLOAD_PROFILE}/${userId}`,
-                formData,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
-            );
-
+            const response = await axiosInstance.post(`${API_PATHS.USER.UPLOAD_PROFILE}/${userId}`);
             if (response.data.success) {
                 await getUser()
             }
-
             successToast("Profile updated");
-
         } catch (error) {
             console.log("Image upload failed:", error);
         } finally {
@@ -141,27 +99,13 @@ export const UserProvider = ({ children }) => {
 
     const handleLogout = async () => {
         try {
-            const token = localStorage.getItem("task-token");
-
-
-            const res = await axiosInstance.post(
-                `${API_PATHS.USER.LOGOUT}`,
-                {},
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
+            if (!token) return;
+            const res = await axiosInstance.post(`${API_PATHS.USER.LOGOUT}`);
             localStorage.removeItem("task-token");
             localStorage.removeItem("task-userId");
             localStorage.removeItem("task-role");
-
             setUser(null);
-
             navigate("/login");
-
         } catch (error) {
             console.log("Logout failed:", error);
             errorToast("Something went wrong");

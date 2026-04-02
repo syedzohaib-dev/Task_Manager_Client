@@ -15,25 +15,16 @@ export const TaskProvider = ({ children }) => {
     const navigate = useNavigate()
     const { user } = useUser()
     const [stats, setStats] = useState(null);
+    const token = localStorage.getItem("task-token");
+
 
 
 
     const getTask = async (id) => {
         try {
+            if (!token) return;
             setLoading(true);
-            const token = localStorage.getItem("task-token");
-
-            if (!token) {
-                setLoading(false);
-                return;
-            }
-
-            const response = await axiosInstance.get(`${API_PATHS.TASK.GET_TASK}/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
+            const response = await axiosInstance.get(`${API_PATHS.TASK.GET_TASK}/${id}`);
             setTask(response?.data?.data);
             return response?.data?.data;
         } catch (error) {
@@ -43,39 +34,33 @@ export const TaskProvider = ({ children }) => {
             setLoading(false);
         }
     };
-    // useEffect(() => {
-    //     getTask();
-    // }, []);
+    useEffect(() => {
+        if (token) {
+            getTask();
+        }
+
+    }, [token]);
 
 
     const getAllTask = async () => {
         try {
+            if (!token) return;
             setLoading(true);
-            const token = localStorage.getItem("task-token");
             const role = localStorage.getItem("task-role");
-
-            if (!token) {
-                setLoading(false);
-                return;
-            }
             const url =
                 user?.role === "admin"
                     ? API_PATHS.TASK.GET_ALL_TASK
                     : API_PATHS.TASK.GET_MY_TASK;
 
 
-            const response = await axiosInstance.get(url, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
+            const response = await axiosInstance.get(url);
             setAllTask(
                 response?.data?.data
                 ||
                 response?.data?.tasks ||
                 []
             );
+            // console.log(response?.data?.data)
         } catch (error) {
             console.log("Failed to fetch all task:", error);
             setAllTask([]);
@@ -84,27 +69,18 @@ export const TaskProvider = ({ children }) => {
         }
     };
     useEffect(() => {
-        if (user && user.role) {
-            getAllTask();
+        if (token) {
+            if (user && user.role) {
+                getAllTask();
+            }
         }
-    }, [user])
+    }, [user, token])
 
     const getStats = async (id) => {
         try {
+            if (!token) return;
             setLoading(true);
-            const token = localStorage.getItem("task-token");
-
-            if (!token) {
-                setLoading(false);
-                return;
-            }
-
-            const response = await axiosInstance.get(`${API_PATHS.TASK.GET_STATS}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
+            const response = await axiosInstance.get(`${API_PATHS.TASK.GET_STATS}`);
             setStats(response?.data);
             return response?.data;
         } catch (error) {
@@ -115,22 +91,20 @@ export const TaskProvider = ({ children }) => {
         }
     };
     useEffect(() => {
-        getStats();
-    }, []);
+        if (token) {
+            getStats();
+        }
+    }, [token]);
 
     const addComment = async (taskId, commentText) => {
         try {
-            const token = localStorage.getItem("task-token");
             if (!token) return;
-
             const response = await axiosInstance.post(
                 `${API_PATHS.TASK.ADD_COMMENT}/${taskId}`,
                 {
                     name: user.fullName,
                     desc: commentText
-                },
-                { headers: { Authorization: `Bearer ${token}`, }, }
-            );
+                });
             setTask(response?.data?.data);
 
             await getTask(taskId);
@@ -144,26 +118,10 @@ export const TaskProvider = ({ children }) => {
 
     const moveToTrash = async (taskId) => {
         try {
+            if (!token) return;
             setLoading(true);
-            const token = localStorage.getItem("task-token");
-
-            if (!token) {
-                setLoading(false);
-                return;
-            }
-
-            const response = await axiosInstance.put(
-                `${API_PATHS.TASK.MOVE_TO_TRASH}/${taskId}`,
-                {},
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
+            const response = await axiosInstance.put(`${API_PATHS.TASK.MOVE_TO_TRASH}/${taskId}`);
             await getAllTask();
-
             return response?.data?.data;
         } catch (error) {
             console.error("Failed to move task to trash:", error);
@@ -176,26 +134,10 @@ export const TaskProvider = ({ children }) => {
 
     const restoreFromTrash = async (taskId) => {
         try {
+            if (!token) return;
             setLoading(true);
-            const token = localStorage.getItem("task-token");
-
-            if (!token) {
-                setLoading(false);
-                return;
-            }
-
-            const response = await axiosInstance.put(
-                `${API_PATHS.TASK.RESTORE_TRASH}/${taskId}`,
-                {},
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
+            const response = await axiosInstance.put(`${API_PATHS.TASK.RESTORE_TRASH}/${taskId}`);
             await getAllTask();
-
             return response?.data?.data;
         } catch (error) {
             console.error("Failed to move task to trash:", error);
@@ -207,25 +149,11 @@ export const TaskProvider = ({ children }) => {
 
     const deleteTaskHandler = async (taskId) => {
         try {
+            if (!token) return;
             setLoading(true);
-            const token = localStorage.getItem("task-token");
-
-            if (!token) {
-                setLoading(false);
-                return;
-            }
-
             const response = await axiosInstance.delete(
-                `${API_PATHS.TASK.DELETE_TASK}/${taskId}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
+                `${API_PATHS.TASK.DELETE_TASK}/${taskId}`);
             await getAllTask();
-
             return response?.data?.data;
         } catch (error) {
             console.error("Failed to delete task:", error);
@@ -238,26 +166,10 @@ export const TaskProvider = ({ children }) => {
 
     const duplicateTaskHandler = async (taskId) => {
         try {
+            if (!token) return;
             setLoading(true);
-            const token = localStorage.getItem("task-token");
-
-            if (!token) {
-                setLoading(false);
-                return;
-            }
-
-            const response = await axiosInstance.post(
-                `${API_PATHS.TASK.DUPLICATE_TASK}/${taskId}`,
-                {},
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
+            const response = await axiosInstance.post(`${API_PATHS.TASK.DUPLICATE_TASK}/${taskId}`);
             await getAllTask();
-
             return response?.data?.data;
         } catch (error) {
             console.error("Failed to duplicate task:", error);
@@ -269,26 +181,10 @@ export const TaskProvider = ({ children }) => {
 
     const addSubTaskHandler = async (taskId, formData) => {
         try {
+            if (!token) return;
             setLoading(true);
-            const token = localStorage.getItem("task-token");
-
-            if (!token) {
-                setLoading(false);
-                return;
-            }
-
-            const response = await axiosInstance.post(
-                `${API_PATHS.TASK.ADD_SUB_TASK}/${taskId}`,
-                formData,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
+            const response = await axiosInstance.post(`${API_PATHS.TASK.ADD_SUB_TASK}/${taskId}`, formData);
             await getAllTask();
-
             return response?.data?.data;
         } catch (error) {
             console.error("Failed to add sub task:", error);
@@ -300,18 +196,11 @@ export const TaskProvider = ({ children }) => {
 
     const addActivityHandler = async (taskId, payload) => {
         try {
+            if (!token) return;
             setLoading(true);
-            const token = localStorage.getItem("task-token");
-
             const res = await axiosInstance.post(
                 `${API_PATHS.TASK.ADD_ACTIVITY}/${taskId}`,
-                payload,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+                payload);
 
             return res?.data?.data;
         } catch (err) {
@@ -323,17 +212,10 @@ export const TaskProvider = ({ children }) => {
     };
 
     const changeTaskStatus = async (taskId, taskStage) => {
-        console.log("API call to:", `${API_PATHS.TASK.UPDATE_STATUS}/${taskId}`);
         try {
-            const token = localStorage.getItem('task-token')
+            if (!token) return;
             const res = await axiosInstance.put(`${API_PATHS.TASK.UPDATE_STATUS}/${taskId}`,
-                taskStage,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+                taskStage);
             getTask(taskId);
         } catch (error) {
             errorToast("Something went wrong status not update");

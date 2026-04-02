@@ -15,7 +15,7 @@ const Stats = ({ role }) => {
         <div className="h-screen bg-gray-100 p-6 overflow-y-auto hide-scrollbar">
             <div className="max-w-7xl mx-auto">
 
-                <div className="w-full flex flex-wrap md:gap-4 gap-2 mb-8">
+                {/* <div className="w-full flex flex-wrap md:gap-4 gap-2 mb-8">
                     <div className="md:w-[300px] w-full  rounded-2xl shadow-sm bg-white border-gray-200 p-6">
                         <div className="flex items-center gap-2 mb-4">
                             <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
@@ -75,6 +75,74 @@ const Stats = ({ role }) => {
                             Last Month
                         </div>
                     </div>
+                </div> */}
+
+                <div className="w-full flex flex-wrap gap-7 mb-8">
+
+                    {/* Total Tasks */}
+                    <div className="relative overflow-hidden bg-white border border-gray-100 rounded-2xl p-5 flex-1 min-w-[200px] md:max-w-[300px]">
+                        <div className="absolute -top-4 -right-4 w-16 h-16 bg-blue-200 rounded-full " />
+                        <div className="flex items-center gap-2.5 mb-5">
+                            <div className="w-[34px] h-[34px] bg-blue-50 rounded-xl flex items-center justify-center">
+                                <FaTasks className="text-blue-700 text-sm" />
+                            </div>
+                            <span className="text-gray-500 text-lg font-medium tracking-wide">Total Tasks</span>
+                        </div>
+                        <div className="text-3xl font-medium text-gray-900 mb-3">{stats?.totalTasks?.count || 0}</div>
+                        <div className="flex items-center gap-2">
+                            <span className="text-xs font-medium text-blue-700 bg-blue-50 rounded-md px-2 py-0.5">{stats?.totalTasks?.change || 0}</span>
+                            <span className="text-md text-gray-400">vs last month</span>
+                        </div>
+                    </div>
+
+                    {/* Completed Tasks */}
+                    <div className="relative overflow-hidden bg-white border border-gray-100 rounded-2xl p-5 flex-1 min-w-[200px] md:max-w-[300px]">
+                        <div className="absolute -top-4 -right-4 w-16 h-16 bg-green-200 rounded-full " />
+                        <div className="flex items-center gap-2.5 mb-5">
+                            <div className="w-[34px] h-[34px] bg-green-50 rounded-xl flex items-center justify-center">
+                                <MdAddTask className="text-green-700 text-sm" />
+                            </div>
+                            <span className="text-gray-500 text-lg font-medium tracking-wide">Completed</span>
+                        </div>
+                        <div className="text-3xl font-medium text-gray-900 mb-3">{stats?.completedTasks?.count || 0}</div>
+                        <div className="flex items-center gap-2">
+                            <span className="text-xs font-medium text-green-700 bg-green-50 rounded-md px-2 py-0.5">{stats?.completedTasks?.change || 0}</span>
+                            <span className="text-md text-gray-400">vs last month</span>
+                        </div>
+                    </div>
+
+                    {/* In Process */}
+                    <div className="relative overflow-hidden bg-white border border-gray-100 rounded-2xl p-5 flex-1 min-w-[200px] md:max-w-[300px]">
+                        <div className="absolute -top-4 -right-4 w-16 h-16 bg-amber-200 rounded-full" />
+                        <div className="flex items-center gap-2.5 mb-5">
+                            <div className="w-[34px] h-[34px] bg-amber-50 rounded-xl flex items-center justify-center">
+                                <FcProcess className="text-amber-700 text-sm" />
+                            </div>
+                            <span className="text-gray-500 text-lg font-medium tracking-wide">In Process</span>
+                        </div>
+                        <div className="text-3xl font-medium text-gray-900 mb-3">{stats?.inProcessTasks?.count || 0}</div>
+                        <div className="flex items-center gap-2">
+                            <span className="text-xs font-medium text-amber-700 bg-amber-50 rounded-md px-2 py-0.5">{stats?.inProcessTasks?.change || 0}</span>
+                            <span className="text-md text-gray-400">vs last month</span>
+                        </div>
+                    </div>
+
+                    {/* Todos */}
+                    <div className="relative overflow-hidden bg-white border border-gray-100 rounded-2xl p-5 flex-1 min-w-[200px] md:max-w-[300px]">
+                        <div className="absolute -top-4 -right-4 w-16 h-16 bg-purple-200 rounded-full" />
+                        <div className="flex items-center gap-2.5 mb-5">
+                            <div className="w-[34px] h-[34px] bg-purple-50 rounded-xl flex items-center justify-center">
+                                <LuListTodo className="text-purple-700 text-sm" />
+                            </div>
+                            <span className="text-gray-500 text-lg font-medium tracking-wide">Todos</span>
+                        </div>
+                        <div className="text-3xl font-medium text-gray-900 mb-3">{stats?.todoTasks?.count || 0}</div>
+                        <div className="flex items-center gap-2">
+                            <span className="text-xs font-medium text-purple-700 bg-purple-50 rounded-md px-2 py-0.5">{stats?.todoTasks?.change || 0}</span>
+                            <span className="text-md text-gray-400">vs last month</span>
+                        </div>
+                    </div>
+
                 </div>
 
                 {/* Table Section */}

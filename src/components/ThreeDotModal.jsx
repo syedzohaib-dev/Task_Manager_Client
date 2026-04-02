@@ -96,7 +96,7 @@ const ThreeDotModal = ({ openThreeDotModal, setOpenThreeDotModal, onClose, setEd
     return (
         <div
             className="absolute top-8 right-2 border border-gray-400 bg-white shadow-lg rounded-md z-50 w-48 px-2 py-3"
-        // onClick={(e) => e.stopPropagation()}
+            // onClick={(e) => e.stopPropagation()}
         >
             {
                 !isTrashMode ?

@@ -40,7 +40,9 @@ const TaskCard = ({ task, setEditTask, setOpenAddTask, handleEdit, isTrashMode }
       }
       {/* <div className="h-[250px] border flex"> */}
 
-      <div className="relative bg-white shadow-md h-[300px] w-[400px] min-w-[200px] min-h-[250px] rounded-lg border border-gray-200">
+      <div
+        // onClick={() => setOpenThreeDotModal(false)}
+        className="relative bg-white shadow-md h-[300px] w-[400px] min-w-[200px] min-h-[250px] rounded-lg border border-gray-200">
         <ThreeDotModal
           task={task}
           openThreeDotModal={openThreeDotModal}

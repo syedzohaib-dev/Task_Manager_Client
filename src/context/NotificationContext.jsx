@@ -8,22 +8,17 @@ export const NotificationContext = createContext();
 export const NotificationProvider = ({ children }) => {
 
     const [notification, setNotification] = useState([])
+    const token = localStorage.getItem("task-token");
 
     const createNotification = async (taskId, assignTaskTo) => {
         try {
-            const token = localStorage.getItem('task-token')
+            if (!token) return;
             if (assignTaskTo && assignTaskTo.length > 0) {
                 const res = await axiosInstance.post(`${API_PATHS.NOTIFICATION.CREATE_NOTI}`,
                     {
                         taskId,
                         assignTaskTo
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
+                    });
             }
         } catch (error) {
             errorToast(error.message)
@@ -33,15 +28,9 @@ export const NotificationProvider = ({ children }) => {
 
     const getNotifications = async () => {
         try {
-            const token = localStorage.getItem("task-token");
+            if (!token) return;
             const res = await axiosInstance.get(
-                `${API_PATHS.NOTIFICATION.GET_NOTI}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            );
+                `${API_PATHS.NOTIFICATION.GET_NOTI}`);
             setNotification(res?.data?.data || [])
 
             return res.data.data
@@ -51,15 +40,16 @@ export const NotificationProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        getNotifications()
-    }, [])
+        if (token) {
+            getNotifications()
+        }
+    }, [token])
 
 
     return (
         <NotificationContext.Provider value={{
             createNotification,
             notification,
-
             getNotifications
         }}>
             {children}
