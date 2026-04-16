@@ -34,12 +34,12 @@ export const TaskProvider = ({ children }) => {
             setLoading(false);
         }
     };
-    useEffect(() => {
-        if (token) {
-            getTask();
-        }
+    // useEffect(() => {
+       
+    //         getTask();
+        
 
-    }, [token]);
+    // }, []);
 
 
     const getAllTask = async () => {

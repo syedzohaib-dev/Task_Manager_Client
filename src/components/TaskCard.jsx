@@ -31,13 +31,13 @@ const TaskCard = ({ task, setEditTask, setOpenAddTask, handleEdit, isTrashMode }
   return (
     <>
       {/* Subtask Modal */}
-      {!isTrashMode &&
+      {/* {!isTrashMode &&
         <AddSubTaskModal
           openAddSubTask={openAddSubTask}
           onClose={() => setOpenAddSubTask(false)}
           task={task}
         />
-      }
+      } */}
       {/* <div className="h-[250px] border flex"> */}
 
       <div
@@ -148,7 +148,7 @@ const TaskCard = ({ task, setEditTask, setOpenAddTask, handleEdit, isTrashMode }
                 {task.assignTaskTo.map((m, i) => (
                   <img
                     key={i}
-                    src={m.userId.profileImgURL || 'https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}
+                    src={m?.userId?.profileImgURL || 'https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}
                     alt={m.name}
                     title={m.name}
                     className="w-7 h-7 rounded-full border-2 border-white shadow-sm"
@@ -161,7 +161,7 @@ const TaskCard = ({ task, setEditTask, setOpenAddTask, handleEdit, isTrashMode }
 
           {/* Add Subtask */}
           <div className="px-4 h-10 bg-white pb-4 w-full flex justify-between items-center">
-            {
+            {/* {
               !isTrashMode && (
                 <button
                   onClick={() => {
@@ -172,7 +172,7 @@ const TaskCard = ({ task, setEditTask, setOpenAddTask, handleEdit, isTrashMode }
                 >
                   + ADD SUBTASK
                 </button>
-              )}
+              )} */}
             <img src="/images/cardsetting.gif" className="w-10 h-10" alt="" />
           </div>
         </div>

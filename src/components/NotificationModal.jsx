@@ -12,7 +12,7 @@ const NotificationModal = ({ openNotify, onClose, }) => {
     }, [openNotify]);
 
     return (
-        <div className="fixed inset-0  flex justify-end items-start p-4">
+        <div className="fixed inset-0 z-50 flex justify-end items-start p-4">
             <div className="bg-white shadow-lg rounded-md w-100 p-4 mt-12">
                 <div className="flex justify-between items-center mb-3">
                     <h2 className="text-lg font-semibold">Notifications</h2>

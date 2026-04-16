@@ -95,11 +95,11 @@ const TeamTable = ({ handleEdit }) => {
                                     </button>
 
 
-                                    <button
+                                    {/* <button
                                         onClick={() => deleteUser(user._id)}
                                         className="p-2  text-red-600 rounded-full">
                                         <FiTrash2 size={18} />
-                                    </button>
+                                    </button> */}
 
                                 </td>
 

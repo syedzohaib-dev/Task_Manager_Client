@@ -84,7 +84,7 @@ const Dashboard = ({ role }) => {
                                         />)
                                         :
                                         (<img
-                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkAJEkJQ1WumU0hXNpXdgBt9NUKc0QDVIiaw&s"
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2rFNJSKPLohcn_M4_oUGRIXub5q5GXPuOWg&s"
                                             alt="Profile"
                                             className="w-10 h-10 rounded-full border-gray-300"
                                         />)

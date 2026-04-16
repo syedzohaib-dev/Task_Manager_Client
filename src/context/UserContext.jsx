@@ -84,7 +84,15 @@ export const UserProvider = ({ children }) => {
             setUploaderLoading(true)
             const formData = new FormData();
             formData.append("image", file);
-            const response = await axiosInstance.post(`${API_PATHS.USER.UPLOAD_PROFILE}/${userId}`);
+            const response = await axiosInstance.post(`${API_PATHS.USER.UPLOAD_PROFILE}/${userId}`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+
             if (response.data.success) {
                 await getUser()
             }

@@ -49,7 +49,7 @@ const Profile = () => {
             <img
               src={
                 user.profileImgURL ||
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBj-1KIYtvjs4ft-nBOoDvTshg3UtK02xhhA&s"
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2rFNJSKPLohcn_M4_oUGRIXub5q5GXPuOWg&s"
               }
               alt="User"
               className="w-28 h-28 rounded-full object-cover border border-gray-300 shadow"

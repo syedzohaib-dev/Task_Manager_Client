@@ -3,11 +3,14 @@ import { FaRegCalendarAlt } from 'react-icons/fa'
 import { FiPaperclip, FiTag } from 'react-icons/fi'
 import { useTask } from '../context/TaskContext';
 import TaskStatusButtons from './TaskStatusButtons.jsx';
+import AddSubTaskModal from './AddSubTaskModal.jsx';
 
 const TaskDetailDiv = ({ task }) => {
     const [commentText, setCommentText] = useState("");
     const [addingComment, setAddingComment] = useState(false);
     const { addComment } = useTask();
+    const [openAddSubTask, setOpenAddSubTask] = useState(false);
+
 
     const handleAddComment = async () => {
         if (!commentText.trim()) {
@@ -27,6 +30,11 @@ const TaskDetailDiv = ({ task }) => {
     };
     return (
         <>
+            <AddSubTaskModal
+                openAddSubTask={openAddSubTask}
+                onClose={() => setOpenAddSubTask(false)}
+                task={task}
+            />
 
             <div className="w-full mx-auto bg-white p-6 md:p-8 rounded-lg shadow mb-10 ">
                 <TaskStatusButtons task={task} />
@@ -119,9 +127,22 @@ const TaskDetailDiv = ({ task }) => {
                 </div>
 
                 <div className="mb-6">
-                    <h2 className="text-lg font-semibold text-gray-900 mb-3">
-                        Sub Tasks
-                    </h2>
+
+                    <div className='w-full bordre flex items-center justify-between mb-3'>
+                        <h2 className="text-lg font-semibold text-gray-900 mb-3">
+                            Sub Tasks
+                        </h2>
+                        <button
+                            onClick={() => {
+                                setOpenAddSubTask(true)
+
+                            }}
+                            className='bg-green-800 text-white p-2 rounded-md disabled:bg-gray-400 font-semibold'
+                        >
+                            + ADD SUBTASK
+                        </button>
+                    </div>
+
 
                     {task.subTasks && task.subTasks.length > 0 ? (
                         <div className="space-y-3">
@@ -135,13 +156,13 @@ const TaskDetailDiv = ({ task }) => {
                                             {sub.taskTitle}
                                         </h3>
 
-                                        <span
+                                        {/* <span
                                             className={`px-3 py-1 rounded-full text-xs font-medium 
                                           ${sub.isCompleted ?
                                                     "bg-green-200 text-green-800" : "bg-yellow-200 text-yellow-800"}`}
                                         >
                                             {sub.isCompleted ? "Completed" : "Pending"}
-                                        </span>
+                                        </span> */}
                                     </div>
 
                                     <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
@@ -183,7 +204,7 @@ const TaskDetailDiv = ({ task }) => {
                             type="button"
                             onClick={handleAddComment}
                             disabled={addingComment}
-                            className='bg-blue-800 text-white p-2 rounded-md disabled:bg-gray-400'>
+                            className='bg-blue-800 text-white p-2 rounded-md disabled:bg-gray-400 font-semibold'>
                             {addingComment ? "Adding..." : "Add Comment"}
                         </button>
                     </div>

@@ -5,7 +5,7 @@ const ProfileModal = ({ openProfile, onClose }) => {
     if (!openProfile) return null;
 
     return (
-        <div className="fixed inset-0  flex justify-end items-start p-4">
+        <div className="fixed inset-0  flex justify-end items-start p-4 z-50">
             <div className="bg-white shadow-lg rounded-md w-50 px-2 mt-12">
                 <div className="flex justify-end items-center">
                     <button onClick={onClose} className="text-gray-500 text-2xl">
